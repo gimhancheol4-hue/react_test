@@ -8,7 +8,7 @@ function App() {
 
   const test = async () => {
     try {
-      const response = await fetch('https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/api/test', {
+      const response = await fetch('/api/test', {
         method: 'GET', // 또는 POST라면 'POST'로 바꾸고 body 설정
         headers: {
           'Content-Type': 'application/json'
