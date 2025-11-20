@@ -8,7 +8,7 @@ function App() {
 
   const test = async () => {
     try {
-      const response = await fetch('http://be614213bec778ecb27210265bd54e82f.apppaas.app:30081/api/test', {
+      const response = await fetch('https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/api/test', {
         method: 'GET', // 또는 POST라면 'POST'로 바꾸고 body 설정
         headers: {
           'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ function App() {
       const data = await response.json(); // 백엔드가 JSON으로 메시지를 반환한다고 가정
       setMessage(data.message); // 예: { message: "Hello from backend!" }
     } catch (error) {
-      console.error('Error fetching message:', error);
+      alert('Error fetching message:', error);
       setMessage('메시지를 가져오는데 실패했습니다');
     }
   };
