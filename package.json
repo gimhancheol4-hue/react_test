@@ -42,7 +42,7 @@
     "gh-pages": "^6.3.0"
   },
   
-  "proxy": "https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app:30081", 
+  "proxy": "https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app", 
 
   "homepage": "https://gimhancheol4-hue.github.io/react_test/"
 

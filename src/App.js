@@ -22,7 +22,7 @@ function App() {
     } catch (error) {
       alert('Error fetching message:', error);
       setMessage('메시지를 가져오는데 실패했습니다');
-    }
+    } 
   };
 
   return (
