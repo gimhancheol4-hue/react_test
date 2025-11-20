@@ -28,6 +28,7 @@ function App() {
   return (
     <div className="App">
       <div>
+        <p>이 버튼은 어떤 버튼이냐면~ 백엔드랑 연결을 확인하는 버튼이야~</p>
         <input type="button" value="백엔드 확인" onClick={test} />
       </div>
       <div>
