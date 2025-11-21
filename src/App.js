@@ -30,12 +30,14 @@ function App() {
   return (
     <div className="App">
       {Header()}
-      <div>
-        <p>이 버튼은 어떤 버튼이냐면~ 백엔드랑 연결을 확인하는 버튼이야~</p>
-        <input type="button" value="백엔드 확인" onClick={test} />
-      </div>
-      <div>
-        응답 메시지: {message}
+      <div className="Main-container">
+        <div>
+          <p>이 버튼은 어떤 버튼이냐면~ 백엔드랑 연결을 확인하는 버튼이야~</p>
+          <input type="button" value="백엔드 확인" onClick={test} />
+        </div>
+        <div>
+          응답 메시지: {message}
+        </div>
       </div>
       {Footer()}
     </div>

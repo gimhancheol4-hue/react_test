@@ -19,3 +19,9 @@
     transform: rotate(360deg);
   }
 }
+
+.Main-container {
+    padding: 20px;
+    text-align: center;
+    height : calc(100vh - 160px);
+} 
