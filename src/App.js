@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header/Header.js';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <div className="App">
+      {Header()}
       <div>
         <p>이 버튼은 어떤 버튼이냐면~ 백엔드랑 연결을 확인하는 버튼이야~</p>
         <input type="button" value="백엔드 확인" onClick={test} />
