@@ -1,0 +1,13 @@
+.Footer-container{
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    color: #555;
+}
+.Footer-link {
+    color: #61dafb;
+    text-decoration: none;
+}
+.Footer-link:hover {
+    text-decoration: underline;
+}   

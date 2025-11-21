@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header/Header.js';
+import Footer from './components/Footer/Footer.js';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -36,6 +37,7 @@ function App() {
       <div>
         응답 메시지: {message}
       </div>
+      {Footer()}
     </div>
   );
 }
