@@ -5,7 +5,7 @@ function Header() {
     return (
         <div className= "Header-container">
         <header>
-            <h1>My Application Header</h1>
+            <h1>인사평가 설계</h1>
         </header>
         </div>
     )
