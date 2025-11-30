@@ -1,18 +1,15 @@
 // App.js
 import React, { useState } from 'react';
 import './App.css';
-import Header from './components/Header/Header.js';
-import Footer from './components/Footer/Footer.js';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import DeptList from './components/Dept/DeptList';
 import EmployeeList from './components/Employee/EmployeeList';
 
 function App() {
   const [message, setMessage] = useState('');
-
-  // 선택된 부서코드
   const [selectedDept, setSelectedDept] = useState('');
 
-  // 백엔드 연결 테스트 함수
   const test = async () => {
     try {
       const response = await fetch(
@@ -29,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      {Header()}
+      <Header />
 
       <div className="Main-container">
         {/* ====== 백엔드 테스트 버튼 ====== */}
@@ -42,14 +39,15 @@ function App() {
 
         <hr />
 
-        {/* ====== 부서 조회 컴포넌트 ====== */}
-        <DeptList onDeptSelect={setSelectedDept} />
-
-        {/* ====== 사원 조회 컴포넌트 ====== */}
-        <EmployeeList selectedDept={selectedDept} />
+        <div style={{ display: 'flex', gap: '20px' }}>
+          {/* ====== 부서 조회 컴포넌트 ====== */}
+          <DeptList onDeptSelect={setSelectedDept} />
+          {/* ====== 사원 조회 컴포넌트 ====== */}
+          <EmployeeList selectedDept={selectedDept} />
+        </div>
       </div>
 
-      {Footer()}
+      <Footer />
     </div>
   );
 }

@@ -28,7 +28,10 @@ function DeptList({ onDeptSelect }) {
       <ul className="dept-list">
         {deptList.map((dept) => (
           <li key={dept.DEPT_CD}>
-            <button className="dept-item" onClick={() => onDeptSelect(dept.DEPT_CD)}>
+            <button
+              className="dept-item"
+              onClick={() => onDeptSelect(dept.DEPT_CD)}
+            >
               <span className="dept-name">{dept.DEPT_NM}</span>
               <span className="dept-code">({dept.DEPT_CD})</span>
             </button>
