@@ -47,14 +47,6 @@ function App() {
       {Header()}
 
       <div className="Main-container">
-        {/* ====== 백엔드 테스트 버튼 ====== */}
-        <div>
-          <p>이 버튼은 어떤 버튼이냐면~ 백엔드랑 연결을 확인하는 버튼이야~</p>
-          <input type="button" value="백엔드 확인" onClick={test} />
-        </div>
-
-        <div>응답 메시지: {message}</div>
-
         <hr />
 
         {/* ✅ 현재 선택된(로그인 가정) 유저 표시 */}
@@ -97,6 +89,15 @@ function App() {
           >
             {showOrgArea ? '부서/사원 영역 숨기기' : '부서/사원 영역 보기'}
           </button>
+        <button style={{
+              padding: '8px 14px',
+              borderRadius: '6px',
+              marginLeft : '10px',
+              border: '1px solid #ccc',
+              background: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '13px',
+            }}>인사평가 매핑</button>
         </div>
 
         {/* ====== 부서 / 사원 영역 ====== */}
