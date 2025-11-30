@@ -49,3 +49,19 @@
   font-size: 12px;
   color: #555;
 }
+
+.emp-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-row input[type='checkbox'] {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.emp-info {
+  display: flex;
+  flex-direction: column;
+}

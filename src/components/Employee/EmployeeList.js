@@ -1,7 +1,8 @@
+// components/Employee/EmployeeList.js
 import React, { useEffect, useState } from 'react';
 import './EmployeeList.css';
 
-function EmployeeList({ selectedDept }) {
+function EmployeeList({ selectedDept, currentUser, onLoginAs }) {
   const [employeeList, setEmployeeList] = useState([]);
 
   useEffect(() => {
@@ -41,14 +42,29 @@ function EmployeeList({ selectedDept }) {
           </div>
 
           <ul className="emp-list">
-            {employeeList.map((emp) => (
-              <li key={emp.EMP_NO} className="emp-item">
-                <div className="emp-name">{emp.USER_NM}</div>
-                <div className="emp-meta">
-                  {emp.EMP_NO} | {emp.USER_EMAIL}
-                </div>
-              </li>
-            ))}
+            {employeeList.map((emp) => {
+              const isChecked =
+                currentUser && currentUser.EMP_NO === emp.EMP_NO;
+
+              return (
+                <li key={emp.EMP_NO} className="emp-item">
+                  <label className="emp-row">
+                    {/* ✅ 로그인 가정 체크박스 */}
+                    <input
+                      type="checkbox"
+                      checked={!!isChecked}
+                      onChange={() => onLoginAs(emp)}
+                    />
+                    <div className="emp-info">
+                      <div className="emp-name">{emp.USER_NM}</div>
+                      <div className="emp-meta">
+                        {emp.EMP_NO} | {emp.USER_EMAIL}
+                      </div>
+                    </div>
+                  </label>
+                </li>
+              );
+            })}
           </ul>
         </>
       )}
