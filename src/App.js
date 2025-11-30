@@ -15,6 +15,9 @@ function App() {
   // ✅ 현재 "로그인했다고 가정"할 유저
   const [currentUser, setCurrentUser] = useState(null);
 
+  // ✅ 부서/사원 조회 영역 보여줄지 여부
+  const [showOrgArea, setShowOrgArea] = useState(false);
+
   // 백엔드 연결 테스트 함수
   const test = async () => {
     try {
@@ -32,7 +35,6 @@ function App() {
 
   // ✅ EmployeeList에서 유저 선택 시 호출될 함수
   const handleLoginAs = (emp) => {
-    // 같은 사람 한 번 더 클릭하면 해제해주고 싶으면 이렇게
     if (currentUser && currentUser.EMP_NO === emp.EMP_NO) {
       setCurrentUser(null);
     } else {
@@ -66,7 +68,9 @@ function App() {
             textAlign: 'left',
           }}
         >
-          <div style={{ fontSize: '14px', color: '#555' }}>현재 로그인 유저(가정)</div>
+          <div style={{ fontSize: '14px', color: '#555' }}>
+            현재 로그인 유저(가정)
+          </div>
           {currentUser ? (
             <div style={{ marginTop: '4px', fontWeight: '600' }}>
               {currentUser.USER_NM} ({currentUser.EMP_NO})
@@ -78,18 +82,43 @@ function App() {
           )}
         </div>
 
-        {/* ====== 부서 / 사원 영역 나란히 보기 좋게 정렬 ====== */}
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-          {/* ====== 부서 조회 컴포넌트 ====== */}
-          <DeptList onDeptSelect={setSelectedDept} />
-
-          {/* ====== 사원 조회 + "로그인 가정" 체크박스 ====== */}
-          <EmployeeList
-            selectedDept={selectedDept}
-            currentUser={currentUser}
-            onLoginAs={handleLoginAs}
-          />
+        {/* ✅ 부서/사원 영역 토글 버튼 */}
+        <div style={{ marginBottom: '10px', textAlign: 'left' }}>
+          <button
+            onClick={() => setShowOrgArea((prev) => !prev)}
+            style={{
+              padding: '8px 14px',
+              borderRadius: '6px',
+              border: '1px solid #ccc',
+              background: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '13px',
+            }}
+          >
+            {showOrgArea ? '부서/사원 영역 숨기기' : '부서/사원 영역 보기'}
+          </button>
         </div>
+
+        {/* ====== 부서 / 사원 영역 ====== */}
+        {showOrgArea && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '20px',
+              alignItems: 'flex-start',
+            }}
+          >
+            {/* 부서 조회 컴포넌트 */}
+            <DeptList onDeptSelect={setSelectedDept} />
+
+            {/* 사원 조회 + "로그인 가정" 체크박스 */}
+            <EmployeeList
+              selectedDept={selectedDept}
+              currentUser={currentUser}
+              onLoginAs={handleLoginAs}
+            />
+          </div>
+        )}
       </div>
 
       {Footer()}
