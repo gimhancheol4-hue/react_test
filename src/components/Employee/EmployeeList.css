@@ -1,0 +1,51 @@
+.emp-container {
+  padding: 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  width: 400px;
+}
+
+.emp-empty {
+  padding: 15px;
+  background: #f9f9f9;
+  border-left: 4px solid #bbb;
+  font-size: 14px;
+  color: #666;
+}
+
+.emp-selected {
+  padding: 10px 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.emp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.emp-item {
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.emp-item:hover {
+  background: #eef5ff;
+  border-color: #4b6ef5;
+}
+
+.emp-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.emp-meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #555;
+}
