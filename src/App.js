@@ -61,7 +61,7 @@ function App() {
           }}
         >
           <div style={{ fontSize: '14px', color: '#555' }}>
-            현재 로그인 유저(가정)
+            현재 로그인 유저
           </div>
           {currentUser ? (
             <div style={{ marginTop: '4px', fontWeight: '600' }}>
@@ -87,7 +87,7 @@ function App() {
               fontSize: '13px',
             }}
           >
-            {showOrgArea ? '부서/사원 영역 숨기기' : '부서/사원 영역 보기'}
+            {showOrgArea ? '유저 선택 닫기' : '유저 선택 보기'}
           </button>
         <button style={{
               padding: '8px 14px',
