@@ -16,7 +16,24 @@ function Mapping({ selectedDept, currentUser }) {
 
   const [deptList, setDeptList] = useState([]);
 
-  // 🔹 부서 목록 조회 (처음 한번 + 필요시)
+  // 🔹 직급 코드 → 직급명 매핑
+  const DUTY_NAME_MAP = {
+    '30': '사원',
+    '40': '주임',
+    '50': '선임',
+    '60': '책임',
+    '70': '이사',
+    '80': '전무',
+    '90': '부사장',
+  };
+
+  const renderDutyName = (code) => {
+    if (!code) return '-';
+    const name = DUTY_NAME_MAP[code];
+    return name ? name : code; // 매핑 없으면 코드 그대로
+  };
+
+  // 🔹 부서 목록 조회 (처음 한번)
   useEffect(() => {
     const fetchDeptList = async () => {
       try {
@@ -27,7 +44,6 @@ function Mapping({ selectedDept, currentUser }) {
           throw new Error('부서 목록 조회 실패: ' + res.status);
         }
         const data = await res.json();
-        // data가 배열이라 가정: [{ DEPT_CD, DEPT_NM, ... }, ...]
         setDeptList(data || []);
       } catch (e) {
         console.error(e);
@@ -112,7 +128,7 @@ function Mapping({ selectedDept, currentUser }) {
             </select>
           </div>
 
-          {/* 부서 선택 (전체 + 모든 부서) */}
+          {/* 부서 선택 */}
           <div className="mapping-filter-item">
             <label>부서</label>
             <select
@@ -129,12 +145,25 @@ function Mapping({ selectedDept, currentUser }) {
             </select>
           </div>
 
+          {/* (옵션) 현재 로그인 유저 기준만 보기 */}
+          <div className="mapping-filter-item">
+            <label>
+              <input
+                type="checkbox"
+                checked={useCurrentUser}
+                onChange={(e) => setUseCurrentUser(e.target.checked)}
+                disabled={!currentUser}
+              />
+              &nbsp;현재 로그인 유저 기준만
+            </label>
+          </div>
+
           {/* 조회 버튼 */}
           <div className="mapping-filter-item">
             <button onClick={handleFetchMapping}>매핑 조회</button>
           </div>
         </div>
-        <small>1차 인사평가 제출기한 : 2025-12-12</small><br></br>
+        <small>1차 인사평가 제출기한 : 2025-12-12</small><br />
         <small>2차 인사평가 제출기한 : 2025-12-20</small>
       </div>
 
@@ -152,7 +181,7 @@ function Mapping({ selectedDept, currentUser }) {
               <tr>
                 <th>부서</th>
                 <th>피평가자</th>
-                <th>직급코드</th>
+                <th>직급</th>
                 <th>업무서약서</th>
                 <th>자기평가</th>
                 <th>1차 평가자</th>
@@ -174,7 +203,7 @@ function Mapping({ selectedDept, currentUser }) {
                     <br />
                     <span className="sub-text">{row.TARGET_EMP_NO}</span>
                   </td>
-                  <td>{row.TARGET_DUTY_CD}</td>
+                  <td>{renderDutyName(row.TARGET_DUTY_CD)}</td>
                   <td>{row.SWEAR_SUBMIT_YN === 'Y' ? '제출' : '미제출'}</td>
                   <td>
                     {row.SELF_EVAL_SUBMIT_YN === 'Y'
