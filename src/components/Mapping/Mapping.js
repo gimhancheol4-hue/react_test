@@ -129,24 +129,6 @@ function Mapping({ selectedDept, currentUser }) {
             </select>
           </div>
 
-          {/* 현재 로그인 유저 기준 체크 */}
-          <div className="mapping-filter-item">
-            <label>
-              <input
-                type="checkbox"
-                checked={useCurrentUser}
-                onChange={(e) => setUseCurrentUser(e.target.checked)}
-                disabled={!currentUser}
-              />
-              &nbsp;현재 로그인 유저 기준만
-            </label>
-            <div className="mapping-filter-text small">
-              {currentUser
-                ? `${currentUser.USER_NM} (${currentUser.EMP_NO})`
-                : '선택된 유저 없음'}
-            </div>
-          </div>
-
           {/* 조회 버튼 */}
           <div className="mapping-filter-item">
             <button onClick={handleFetchMapping}>매핑 조회</button>

@@ -5,7 +5,7 @@ function Header() {
     return (
         <div className= "Header-container">
         <header>
-            <h1>인사평가 설계</h1>
+            <h1>기만철의 인사평가 설계~ ^^</h1>
         </header>
         </div>
     )
