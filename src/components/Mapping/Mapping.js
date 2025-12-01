@@ -21,7 +21,7 @@ function Mapping({ selectedDept, currentUser }) {
     const fetchDeptList = async () => {
       try {
         const res = await fetch(
-          'http://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/dept'
+          'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/dept'
         );
         if (!res.ok) {
           throw new Error('부서 목록 조회 실패: ' + res.status);
@@ -63,7 +63,7 @@ function Mapping({ selectedDept, currentUser }) {
       setError(null);
 
       const response = await fetch(
-        'http://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/select',
+        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/select',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
