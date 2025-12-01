@@ -23,8 +23,18 @@ function Evaluation({ currentUser }) {
         if (!res.ok) throw new Error('Failed to load form list');
 
         const json = await res.json();
-        // json = { success, count, data: [...] } 라고 가정
-        const list = Array.isArray(json) ? json : json.data;
+        console.log('[DEBUG] /eval/forms 응답', json);
+
+        // json이 배열이거나, {data:[...]} 형식이거나, 다른 키일 수도 있어서 방어적으로 처리
+        let list = [];
+        if (Array.isArray(json)) {
+          list = json;
+        } else if (Array.isArray(json.data)) {
+          list = json.data;
+        } else if (Array.isArray(json.result)) {
+          list = json.result;
+        }
+
         setFormTypes(list || []);
       } catch (err) {
         console.error(err);
@@ -37,7 +47,7 @@ function Evaluation({ currentUser }) {
 
   // 선택된 formCode 에 해당하는 form 객체
   const selectedFormObj = Array.isArray(formTypes)
-    ? formTypes.find((f) => f.formCode === selectedForm)
+    ? formTypes.find((f) => f.formCode === selectedForm || f.form_code === selectedForm)
     : null;
 
   // 선택된 form 에 대한 단계 목록 (백엔드에서 steps 안 줄 경우 대비 기본값)
@@ -62,8 +72,17 @@ function Evaluation({ currentUser }) {
       if (!res.ok) throw new Error('Failed to load layout');
 
       const json = await res.json();
-      // json = { success, count, data: [...] } 라고 가정
-      const list = Array.isArray(json) ? json : json.data;
+      console.log('[DEBUG] /eval/layout 응답', json);
+
+      let list = [];
+      if (Array.isArray(json)) {
+        list = json;
+      } else if (Array.isArray(json.data)) {
+        list = json.data;
+      } else if (Array.isArray(json.result)) {
+        list = json.result;
+      }
+
       setFields(list || []);
       setValues({});
     } catch (err) {
@@ -167,16 +186,22 @@ function Evaluation({ currentUser }) {
         <select value={selectedForm} onChange={handleFormSelect}>
           <option value="">-- 선택 --</option>
           {Array.isArray(formTypes) &&
-            formTypes.map((form) => (
-              <option
-                key={form.formCode + (form.positionGroup || '')}
-                value={form.formCode}
-              >
-                {form.positionGroup
-                  ? `${form.formName} (${form.positionGroup})`
-                  : form.formName}
-              </option>
-            ))}
+            formTypes.map((form, idx) => {
+              const formCode = form.formCode || form.form_code;
+              const formName = form.formName || form.form_name;
+              const positionGroup = form.positionGroup || form.position_group;
+
+              return (
+                <option
+                  key={(formCode || 'code') + (positionGroup || '') + idx}
+                  value={formCode}
+                >
+                  {positionGroup
+                    ? `${formName} (${positionGroup})`
+                    : formName}
+                </option>
+              );
+            })}
         </select>
       </div>
 
@@ -201,13 +226,14 @@ function Evaluation({ currentUser }) {
       {!loading &&
         selectedForm &&
         Array.isArray(fields) &&
-        fields.map((f) => {
+        fields.map((f, idx) => {
           const fieldCode = f.fieldCode || f.field_code;
           const fieldLabel = f.fieldLabel || f.field_label;
-          const fieldType = f.fieldType || f.field_type;
+          const rawType = f.fieldType || f.field_type || 'TEXT';
+          const fieldType = String(rawType).toUpperCase();
 
           return (
-            <div key={fieldCode} className="eval-field">
+            <div key={(fieldCode || 'field') + idx} className="eval-field">
               <label>{fieldLabel}</label>
 
               {fieldType === 'TEXT' && (
