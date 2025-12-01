@@ -152,6 +152,8 @@ function Mapping({ selectedDept, currentUser }) {
             <button onClick={handleFetchMapping}>매핑 조회</button>
           </div>
         </div>
+        <small>1차 인사평가 제출기한 : 2025-12-12</small><br></br>
+        <small>2차 인사평가 제출기한 : 2025-12-20</small>
       </div>
 
       {loading && <div className="mapping-status">조회 중...</div>}
