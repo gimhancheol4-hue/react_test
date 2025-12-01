@@ -18,21 +18,6 @@ function App() {
   // ✅ 부서/사원 조회 영역 보여줄지 여부
   const [showOrgArea, setShowOrgArea] = useState(false);
 
-  // 백엔드 연결 테스트 함수
-  const test = async () => {
-    try {
-      const response = await fetch(
-        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/api/test'
-      );
-      if (!response.ok) throw new Error(response.status);
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (error) {
-      alert('백엔드 연결 실패');
-      setMessage('메시지를 가져오는데 실패했습니다');
-    }
-  };
-
   // ✅ EmployeeList에서 유저 선택 시 호출될 함수
   const handleLoginAs = (emp) => {
     if (currentUser && currentUser.EMP_NO === emp.EMP_NO) {
@@ -41,6 +26,41 @@ function App() {
       setCurrentUser(emp);
     }
   };
+
+    const handleCreateEvalMapping = async () => {
+    try {
+      const response = await fetch(
+        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/api/eval/mapping/create',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            year: '2025',
+            evalType: 'INS',
+            instCd: '001',           // 필요 없으면 null 보내도 됨
+            selfDueDate: '2025-12-10',
+            firstDueDate: '2025-12-15',
+            secondDueDate: '2025-12-20',
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('서버 응답이 올바르지 않습니다. ' + response.status);
+      }
+
+      const data = await response.json();
+
+      // 응답 구조: { success, insertedCount, message }
+      alert(`${data.message}\n생성 건수: ${data.insertedCount}건`);
+    } catch (error) {
+      console.error(error);
+      alert('인사평가 매핑 생성 중 오류가 발생했습니다.');
+    }
+  };
+
 
   return (
     <div className="App">
@@ -89,15 +109,20 @@ function App() {
           >
             {showOrgArea ? '유저 선택 닫기' : '유저 선택 보기'}
           </button>
-        <button style={{
+          <button
+            onClick={handleCreateEvalMapping}
+            style={{
               padding: '8px 14px',
               borderRadius: '6px',
-              marginLeft : '10px',
+              marginLeft: '10px',
               border: '1px solid #ccc',
               background: '#ffffff',
               cursor: 'pointer',
               fontSize: '13px',
-            }}>인사평가 매핑</button>
+            }}
+          >
+            인사평가 매핑
+          </button>
         </div>
 
         {/* ====== 부서 / 사원 영역 ====== */}
