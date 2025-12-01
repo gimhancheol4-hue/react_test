@@ -1,31 +1,59 @@
 // components/Mapping/Mapping.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Mapping.css';
 
 function Mapping({ selectedDept, currentUser }) {
-  const [year, setYear] = useState('2025');
+  const currentYear = new Date().getFullYear();
+  const yearList = Array.from({ length: 15 }, (_, i) => currentYear - i);
+
+  const [year, setYear] = useState(String(currentYear));
+  const [dept, setDept] = useState(selectedDept || '');
   const [useCurrentUser, setUseCurrentUser] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [mappings, setMappings] = useState([]);
   const [error, setError] = useState(null);
 
+  const [deptList, setDeptList] = useState([]);
+
+  // 🔹 부서 목록 조회 (처음 한번 + 필요시)
+  useEffect(() => {
+    const fetchDeptList = async () => {
+      try {
+        const res = await fetch(
+          'http://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/dept'
+        );
+        if (!res.ok) {
+          throw new Error('부서 목록 조회 실패: ' + res.status);
+        }
+        const data = await res.json();
+        // data가 배열이라 가정: [{ DEPT_CD, DEPT_NM, ... }, ...]
+        setDeptList(data || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchDeptList();
+  }, []);
+
+  // 🔹 상위에서 선택한 부서(selectedDept)가 바뀌면 내부 선택값도 맞춰줌
+  useEffect(() => {
+    if (selectedDept) {
+      setDept(selectedDept);
+    }
+  }, [selectedDept]);
+
   const handleFetchMapping = async () => {
     if (!year) {
-      alert('평가년도를 입력해주세요.');
+      alert('평가년도를 선택해주세요.');
       return;
-    }
-
-    if (!selectedDept) {
-      if (!window.confirm('부서가 선택되지 않았습니다.\n전체 부서 기준으로 조회할까요?')) {
-        return;
-      }
     }
 
     const body = {
       instCd: '001',
       year: year,
-      deptCd: selectedDept || '',
+      deptCd: dept || '',
       targetEmpNo: useCurrentUser && currentUser ? currentUser.EMP_NO : '',
       evaluatorEmpNo: '',
     };
@@ -35,7 +63,7 @@ function Mapping({ selectedDept, currentUser }) {
       setError(null);
 
       const response = await fetch(
-        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/select',
+        'http://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/select',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -67,23 +95,41 @@ function Mapping({ selectedDept, currentUser }) {
       <div className="mapping-header">
         <h2>인사평가 매핑 조회</h2>
         <div className="mapping-filter-row">
+          {/* 평가년도 선택 */}
           <div className="mapping-filter-item">
             <label>평가년도</label>
-            <input
-              type="text"
+            <select
               value={year}
               onChange={(e) => setYear(e.target.value)}
-              placeholder="예) 2025"
-            />
+              className="mapping-select"
+            >
+              <option value="">선택</option>
+              {yearList.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* 부서 선택 (전체 + 모든 부서) */}
           <div className="mapping-filter-item">
             <label>부서</label>
-            <div className="mapping-filter-text">
-              {selectedDept ? selectedDept : '선택된 부서 없음'}
-            </div>
+            <select
+              value={dept}
+              onChange={(e) => setDept(e.target.value)}
+              className="mapping-select"
+            >
+              <option value="">전체</option>
+              {deptList.map((d) => (
+                <option key={d.DEPT_CD} value={d.DEPT_CD}>
+                  {d.DEPT_CD} - {d.DEPT_NM}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* 현재 로그인 유저 기준 체크 */}
           <div className="mapping-filter-item">
             <label>
               <input
@@ -101,6 +147,7 @@ function Mapping({ selectedDept, currentUser }) {
             </div>
           </div>
 
+          {/* 조회 버튼 */}
           <div className="mapping-filter-item">
             <button onClick={handleFetchMapping}>매핑 조회</button>
           </div>

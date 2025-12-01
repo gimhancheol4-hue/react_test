@@ -109,7 +109,7 @@ function App() {
               fontSize: '13px',
             }}
           >
-            {showOrgArea ? '유저 선택 닫기' : '유저 선택 보기'}
+            {showOrgArea ? '로그인 닫기' : '로그인 보기'}
           </button>
 
           <button
@@ -124,7 +124,7 @@ function App() {
               fontSize: '13px',
             }}
           >
-            인사평가 매핑 생성
+            인사평가 매핑 생성(관리자)
           </button>
 
           <button
@@ -139,7 +139,7 @@ function App() {
               fontSize: '13px',
             }}
           >
-            {showMappingArea ? '매핑 조회 닫기' : '매핑 조회 보기'}
+            매핑 조회(관리자)
           </button>
         </div>
 
