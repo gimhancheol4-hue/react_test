@@ -30,7 +30,7 @@ function App() {
     const handleCreateEvalMapping = async () => {
     try {
       const response = await fetch(
-        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/api/eval/mapping/create',
+        'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/create',
         {
           method: 'POST',
           headers: {
