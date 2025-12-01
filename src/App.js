@@ -5,6 +5,7 @@ import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import DeptList from './components/Dept/DeptList';
 import EmployeeList from './components/Employee/EmployeeList';
+import Mapping from './components/Mapping/Mapping';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -18,6 +19,9 @@ function App() {
   // ✅ 부서/사원 조회 영역 보여줄지 여부
   const [showOrgArea, setShowOrgArea] = useState(false);
 
+  // ✅ 매핑 조회 영역 토글
+  const [showMappingArea, setShowMappingArea] = useState(false);
+
   // ✅ EmployeeList에서 유저 선택 시 호출될 함수
   const handleLoginAs = (emp) => {
     if (currentUser && currentUser.EMP_NO === emp.EMP_NO) {
@@ -27,7 +31,7 @@ function App() {
     }
   };
 
-    const handleCreateEvalMapping = async () => {
+  const handleCreateEvalMapping = async () => {
     try {
       const response = await fetch(
         'https://ue5d259c495b65fd767b5629d1f4c8d60.apppaas.app/eval/mapping/create',
@@ -38,7 +42,7 @@ function App() {
           },
           body: JSON.stringify({
             year: '2025',
-            instCd: '001',           // 필요 없으면 null 보내도 됨
+            instCd: '001',
             selfDueDate: '2025-12-10',
             firstDueDate: '2025-12-15',
             secondDueDate: '2025-12-20',
@@ -60,7 +64,6 @@ function App() {
     }
   };
 
-
   return (
     <div className="App">
       {Header()}
@@ -75,7 +78,7 @@ function App() {
             padding: '10px 14px',
             borderRadius: '8px',
             background: '#f5f7ff',
-            border: '1px solid #d1d9ff',
+            border: '1px solid',
             textAlign: 'left',
           }}
         >
@@ -93,7 +96,7 @@ function App() {
           )}
         </div>
 
-        {/* ✅ 부서/사원 영역 토글 버튼 */}
+        {/* ✅ 부서/사원 영역 & 매핑 영역 토글 버튼 */}
         <div style={{ marginBottom: '10px', textAlign: 'left' }}>
           <button
             onClick={() => setShowOrgArea((prev) => !prev)}
@@ -108,6 +111,7 @@ function App() {
           >
             {showOrgArea ? '유저 선택 닫기' : '유저 선택 보기'}
           </button>
+
           <button
             onClick={handleCreateEvalMapping}
             style={{
@@ -120,7 +124,22 @@ function App() {
               fontSize: '13px',
             }}
           >
-            인사평가 매핑
+            인사평가 매핑 생성
+          </button>
+
+          <button
+            onClick={() => setShowMappingArea((prev) => !prev)}
+            style={{
+              padding: '8px 14px',
+              borderRadius: '6px',
+              marginLeft: '10px',
+              border: '1px solid #ccc',
+              background: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '13px',
+            }}
+          >
+            {showMappingArea ? '매핑 조회 닫기' : '매핑 조회 보기'}
           </button>
         </div>
 
@@ -143,6 +162,11 @@ function App() {
               onLoginAs={handleLoginAs}
             />
           </div>
+        )}
+
+        {/* ====== 매핑 조회 영역 ====== */}
+        {showMappingArea && (
+          <Mapping selectedDept={selectedDept} currentUser={currentUser} />
         )}
       </div>
 
