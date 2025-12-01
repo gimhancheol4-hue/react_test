@@ -38,7 +38,6 @@ function App() {
           },
           body: JSON.stringify({
             year: '2025',
-            evalType: 'INS',
             instCd: '001',           // 필요 없으면 null 보내도 됨
             selfDueDate: '2025-12-10',
             firstDueDate: '2025-12-15',
