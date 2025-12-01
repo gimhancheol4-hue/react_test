@@ -23,5 +23,6 @@
 .Main-container {
     padding: 20px;
     text-align: center;
-    height : flexible;
+    min-height: 400px;   /* 기본 높이 */
+    height: auto;        /* 내용만큼 자동 증가 */
 } 
