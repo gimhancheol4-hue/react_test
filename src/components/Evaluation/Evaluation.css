@@ -56,3 +56,150 @@
 .submit-btn:hover {
   background: #005fcc;
 }
+/* ===== 공통 레이아웃 / 카드 스타일 ===== */
+
+.evaluation-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* 카드 하나(섹션) */
+.eval-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px 20px 20px;
+  margin-top: 18px;
+  border: 1px solid #e2e6f0;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+
+.eval-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.eval-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.eval-card-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 섹션 안 그리드 배치 */
+.eval-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 20px;
+}
+
+.eval-grid-1 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+/* 라벨 + 입력 한 줄 */
+.eval-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.eval-row label {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* input / textarea / select 공통 */
+.eval-input,
+.eval-textarea,
+.eval-select {
+  width: 100%;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+}
+
+.eval-input:focus,
+.eval-textarea:focus,
+.eval-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.15);
+}
+
+.eval-textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* 작은 부제같은 라벨 */
+.eval-section-caption {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+/* 직무 1/2/3 같은 덩어리 */
+.eval-duty-block {
+  border: 1px dashed #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 8px;
+}
+
+.eval-duty-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* 버튼 */
+.submit-btn {
+  margin-top: 22px;
+  padding: 9px 18px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: none;
+  background: #4f46e5;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #4338ca;
+}
+
+/* 평가 등급 셀렉트 라인 */
+.eval-grade-row {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .eval-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .eval-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
